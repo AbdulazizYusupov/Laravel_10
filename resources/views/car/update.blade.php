@@ -6,7 +6,7 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1 class="m-0">Create</h1>
+                        <h1 class="m-0">Edit</h1>
                     </div>
                 </div>
                 <div class="row mb-2">
@@ -21,27 +21,21 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        @can('car.store')
-                            <form action="{{ route('car.store') }}"
+                        @can('car.update')
+                            <form action="{{ route('car.update', $car->id )}}"
                                   method="POST">
                                 @csrf
+                                @method('PUT')
                                 <div class="mb-3">
-                                    @error('model')
-                                    <div class="text-danger">{{ $message }}</div>
-                                    @enderror
                                     <input type="text" id="model" class="form-control"
-                                           name="model" value="{{old('model')}}" placeholder="Enter Model"><br>
-                                    @error('color')
-                                    <div class="text-danger">{{ $message }}</div>
-                                    @enderror
+                                           name="model" value="{{$car->model}}" placeholder="Enter Model"><br>
                                     <input type="text" class="form-control"
-                                           name="color" value="{{old('color')}}" id="color" placeholder="Enter Color"><br>
-                                    @error('price')
-                                    <div class="text-danger">{{ $message }}</div>
-                                    @enderror
+                                           name="color" value="{{$car->color}}" id="color"
+                                           placeholder="Enter Color"><br>
                                     <input type="number" class="form-control"
-                                           name="price" value="{{old('price')}}" id="price" placeholder="Enter Price"><br>
-                                    <input type="submit" value="Add Post" class="btn btn-outline-info">
+                                           name="price" value="{{$car->price}}" id="price"
+                                           placeholder="Enter Price"><br>
+                                    <input type="submit" value="Edit" class="btn btn-outline-info">
                                 </div>
                             </form>
                         @endcan

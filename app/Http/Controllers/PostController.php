@@ -32,6 +32,11 @@ class PostController
         return redirect()->route('post.index');
     }
 
+    public function edit(Post $post)
+    {
+        return view('post.update', ['post' => $post]);
+    }
+
     public function update(Request $request, Post $post)
     {
         $data = $request->validate([

@@ -38,7 +38,10 @@ class CarController
 
         return redirect()->route('car.index');
     }
-
+    public function edit(Car $car)
+    {
+        return view('car.update',['car' => $car]);
+    }
     public function update(Request $request, Car $car)
     {
         $data = $request->validate([
