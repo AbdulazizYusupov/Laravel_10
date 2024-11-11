@@ -22,45 +22,24 @@ class PostController
 
     public function store(Request $request)
     {
-        $request->validate([
+        $data = $request->validate([
             'title' => 'required|max:255',
             'body' => 'required|max:255',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:4096',
         ]);
-        $data = $request->all();
-
-        if ($request->hasFile('image')) {
-            $file = $request->file('image');
-            $filename = date('Y-m-d') . '_' . time() . '.' . $file->getClientOriginalExtension();
-            $file->move(public_path('images'), $filename);
-
-            $data['image'] = 'images/' . $filename;
-        }
 
         Post::create($data);
 
-        return redirect()->route('post');
-    }
-
-    public function show($id)
-    {
-        $post = Post::findOrFail($id);
-        return view('post.show', ["post" => $post]);
+        return redirect()->route('post.index');
     }
 
     public function update(Request $request, Post $post)
     {
-        $request->validate([
+        $data = $request->validate([
             'title' => 'required|max:255',
             'body' => 'required|max:255',
         ]);
-        $title = $request->input('title');
-        $body = $request->input('body');
-        $post->update([
-            'title' => $title,
-            'body' => $body,
-        ]);
-        return redirect()->route('post');
+        $post->update($data);
+        return redirect()->route('post.index')->with('success', 'Post updated successfully');
     }
 
     public function destroy(Request $request, Post $post)
@@ -68,6 +47,6 @@ class PostController
         $id = $request->id;
         $destroy = Post::findOrFail($id);
         $destroy->delete();
-        return redirect()->route('post');
+        return redirect()->route('post.index')->with('success', 'Post deleted successfully');
     }
 }

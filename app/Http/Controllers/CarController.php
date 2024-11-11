@@ -36,7 +36,7 @@ class CarController
 
         Car::create($data);
 
-        return redirect()->route('car');
+        return redirect()->route('car.index');
     }
 
     public function update(Request $request, Car $car)
@@ -47,7 +47,7 @@ class CarController
             'price' => 'required',
         ]);
         $car->update($data);
-        return redirect()->route('car');
+        return redirect()->route('car.index');
     }
 
     public function destroy(Request $request, Car $car)
@@ -55,6 +55,6 @@ class CarController
         $id = $request->id;
         $destroy = Car::findOrFail($id);
         $destroy->delete();
-        return redirect()->route('car');
+        return redirect()->route('car.index');
     }
 }
