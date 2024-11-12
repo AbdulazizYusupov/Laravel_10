@@ -37,7 +37,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/post-delete/{id}',[PostController::class, 'destroy'])->name('post.destroy')->middleware('can:post.destroy');
     });
 });
-
+Route::get('/verify',[\App\Http\Controllers\CheckController::class, 'verify'])->name('verify');
 Route::get('/check-index',[\App\Http\Controllers\CheckController::class, 'index'])->name('check.index');
 Route::post('/check',[\App\Http\Controllers\CheckController::class, 'check'])->name('check');
 

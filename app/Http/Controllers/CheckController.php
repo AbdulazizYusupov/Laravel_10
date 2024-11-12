@@ -13,8 +13,17 @@ class CheckController extends Controller
 {
     public function index()
     {
-        Mail::to(auth()->user()->email)->send(new SendMessages());
-        return back();
+        $rand = rand(100000, 999999);
+        Check::create([
+            'user_id' => auth()->user()->id,
+            'value' => $rand,
+        ]);
+        Mail::to(auth()->user()->email)->send(new SendMessages($rand));
+        return redirect()->back();
+    }
+    public function verify()
+    {
+        return view('check');
     }
     public function check(Request $request)
     {
@@ -30,10 +39,12 @@ class CheckController extends Controller
                 $user->update([
                     'email_verified_at' => date('Y-m-d H:i:s')
                 ]);
-                return redirect()->back();
+                return redirect(route('dashboard'));
             }else {
-                return redirect()->back()->with('error', 'Foydalanuvchi topilmadi!');
+                return redirect()->back();
             }
+        }else{
+            return redirect()->back();
         }
     }
 }

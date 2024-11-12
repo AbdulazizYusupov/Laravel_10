@@ -1,9 +1,4 @@
-@php
-    $data = \App\Models\Check::all();
-    $len = count($data) - 1;
-    $rand = $data[$len];
-@endphp
-    <!doctype html>
+<!doctype html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -16,9 +11,8 @@
 <div class="container">
     <div class="row">
         <div class="col-md-12">
-            @php
-                echo $rand->value;
-            @endphp
+            <h1>Verify your email</h1>
+            <h1>{{$data}}</h1>
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"

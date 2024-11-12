@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Mail\SendMessages;
+use App\Models\Check;
 use App\Models\User;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
@@ -45,10 +46,16 @@ class RegisteredUserController extends Controller
 
         event(new Registered($user));
 
-        Mail::to($request->email)->send(new SendMessages());
-
         Auth::login($user);
 
-        return redirect(route('dashboard', absolute: false));
+        $rand = rand(100000, 999999);
+
+        Check::create([
+            'user_id' => $user->id,
+            'value' => $rand,
+        ]);
+        Mail::to($user->email)->send(new SendMessages($rand));
+
+        return redirect(route('verify',absolute: false));
     }
 }

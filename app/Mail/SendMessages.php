@@ -17,13 +17,10 @@ class SendMessages extends Mailable
     /**
      * Create a new message instance.
      */
-    public function __construct()
+    public $data;
+    public function __construct($data)
     {
-        $rand = rand(100000, 999999);
-        Check::create([
-            'user_id' => auth()->user()->id,
-            'value' => $rand,
-        ]);
+        $this->data = $data;
     }
 
     /**
